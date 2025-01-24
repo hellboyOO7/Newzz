@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { createContext, useEffect, useState, useCallback } from "react";
 
 // Create the context
@@ -19,9 +18,13 @@ const StoreProvider = ({ children }) => {
     setError(null); // Reset error before fetching
 
     try {
-      const { data } = await axios.get(
+      const response = await fetch(
         `https://newsapi.org/v2/everything?q=${search}&apikey=${API_KEY}`
       );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
       setArticles(data.articles || []); // Safely handle data
     } catch (err) {
       setError("Failed to fetch news. Please try again later."); // User-friendly error message
