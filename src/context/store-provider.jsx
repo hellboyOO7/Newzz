@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState, useCallback } from "react";
-
 // Create the context
 export const StoreContext = createContext();
 
@@ -7,7 +6,7 @@ const StoreProvider = ({ children }) => {
   const API_KEY = import.meta.env.VITE_NEWZ_API_KEY;
 
   // States
-  const [search, setSearch] = useState("india");
+  const [search, setSearch] = useState("general");
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
   const [error, setError] = useState(null); // Add error state
@@ -19,7 +18,7 @@ const StoreProvider = ({ children }) => {
 
     try {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${search}&apikey=${API_KEY}`
+        `https://gnews.io/api/v4/top-headlines?category=${search}&apikey=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -38,7 +37,6 @@ const StoreProvider = ({ children }) => {
   useEffect(() => {
     getData();
   }, [getData]);
-
   // Memoized context value for better performance
   const contextValue = React.useMemo(
     () => ({ articles, setSearch, isLoading, error }),

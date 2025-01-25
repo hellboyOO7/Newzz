@@ -34,8 +34,8 @@ const NewsCard = () => {
             <CardHeader>
               <div className="w-[280px] h-[180px] rounded-md overflow-hidden mt-[-15px]">
                 <img
-                  src={article.urlToImage}
-                  alt={article.author || "News Image"}
+                  src={article.image}
+                  alt={article.source.name || "News Image"}
                   className="h-full w-full object-cover"
                   loading="lazy"
                 />
@@ -48,6 +48,9 @@ const NewsCard = () => {
               </CardDescription>
             </CardHeader>
             <div className="w-full flex justify-end items-end p-2">
+              <p className=" w-[100%] p-1.5">
+                {article.publishedAt.slice(0, 10)}
+              </p>
               <Button
                 onClick={() => readMore(article.url)}
                 className="w-[130px]"

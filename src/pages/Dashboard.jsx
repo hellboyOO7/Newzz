@@ -1,35 +1,38 @@
 import NewsCard from "@/components/NewsCard/NewsCard";
 import useStore from "@/hooks/useStore";
+import ProgressBar from "@/components/ProgressBar/ProgressBar";
 
 const Dashboard = () => {
-  const { setSearch } = useStore();
+  const { setSearch, isLoading } = useStore();
 
   // Predefined categories for navigation
   const categories = [
-    "sports",
-    "politics",
+    "world",
+    "nation",
+    "business",
+    "technology",
     "entertainment",
+    "sports",
+    "science",
     "health",
-    "fitness",
   ];
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       {/* Categories Navigation */}
-      <ul className="w-full flex gap-5 justify-center items-center text-center mb-7">
+      <ul className="w-full flex gap-5 justify-center items-center text-center mb-7 flex-wrap ">
         {categories.map((category) => (
           <li
             key={category}
-            className="underline text-xl hover:cursor-pointer"
+            className=" text-xl hover:cursor-pointer hover:underline"
             onClick={() => setSearch(category)}
           >
             {capitalize(category)}
           </li>
         ))}
       </ul>
-
       {/* News Cards */}
-      <NewsCard />
+      {isLoading ? <ProgressBar /> : <NewsCard />}
     </div>
   );
 };
